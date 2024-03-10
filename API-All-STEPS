@@ -31,9 +31,22 @@ This MarketServices{} Class will
 --Use all traits 
 --Connect/Get baseUri from Config>Serives.php with __consturctor() Function 
 --Create function to query from BaseUri for example: 
-    public function getProducts(){
-    return $this->makeRequest('GET', 'products');
-    }
+     
+namespace App\Services;
+     use App\Traits\AuthorizesMarketRequests;
+     use App\Traits\ConsumesExternalServices;
+     use App\Traits\InteractsWithMarketResponses;
+        
+     class MarketService{
+         use ConsumesExternalServices, AuthorizesMarketRequests, InteractsWithMarketResponses;
+         protected $baseUri;
+         public function __construct(){
+             $this->baseUri = config('services.market.base_uri');
+         }
+         public function getProducts(){
+             return $this->makeRequest('GET', 'products');
+         }
+
 
 
 ===============Step 05:  (Connect the Services>MarketServices into Base Controller so that  I can use it into all controller)======================

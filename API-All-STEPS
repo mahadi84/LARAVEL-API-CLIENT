@@ -1,0 +1,63 @@
+
+===============Step 01 (Add into .env file:)====================
+
+MARKET_BASE_URI=https://laravelapi.juandmegon.com
+MARKET_CLIENT_ID=
+MARKET_CLIENT_SECRET=
+MARKET_PASSWORD_CLIENT_ID=
+MARKET_PASSWORD_CLIENT_SECRET=
+
+
+================Step 02 (Add into Config>Services.php)==================
+
+'market' => [
+        'base_uri' => env('MARKET_BASE_URI'),
+        'client_id' => env('MARKET_CLIENT_ID'),
+        'client_secret' => env('MARKET_CLIENT_SECRET'),
+        'password_client_id' => env('MARKET_PASSWORD_CLIENT_ID'),
+        'password_client_secret' => env('MARKET_PASSWORD_CLIENT_SECRET'),
+    ],
+
+==============Step 03: (Create below Traits)========================== 
+
+01. ConsumesExternalServices.php  //Send request to external url with parameter by help of GuzzleHttp Client.
+02. InteractsWithMarketResponses.php // DECODE response to php and SHOW if ther is any Error
+03. AuthorizesMarketRequests.php  //Vaidate Access_token with permission
+
+
+===============Step 04: (Create a Services>MarketServices)========================
+ 
+This MarketServices{} Class will 
+--Use all traits 
+--Connect/Get baseUri from Config>Serives.php with __consturctor() Function 
+--Create function to query from BaseUri for example: 
+    public function getProducts(){
+    return $this->makeRequest('GET', 'products');
+    }
+
+
+===============Step 05:  (Connect the Services>MarketServices into Base Controller so that  I can use it into all controller)======================
+
+use App\Services\MarketService;
+class Controller extends BaseController{
+  protected $marketService;
+    public function __construct(MarketService $marketService){
+        $this->marketService = $marketService;
+    }
+}
+
+===============Step 06: Create a contoller and call  $marketService for CRUE Or other operation ========================
+
+class WelcomeController extends Controller{    
+    public function showWelcomePage()    {
+        $products = $this->marketService->getProducts();
+        $categories = $this->marketService->getCategories();
+
+        return view('welcome')
+            ->with([
+                'products' => $products,
+                'categories' => $categories,
+            ]);
+    }
+}
+

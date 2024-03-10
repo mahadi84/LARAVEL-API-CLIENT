@@ -25,7 +25,7 @@ MARKET_PASSWORD_CLIENT_SECRET=
 03. AuthorizesMarketRequests.php  //Vaidate Access_token with permission
 
 
-===============Step 04: (Create a Services>MarketServices)========================
+===============Step 04: (Create a Services>MarketServices Class)========================
  
 This MarketServices{} Class will 
 --Use all traits 
@@ -49,7 +49,7 @@ namespace App\Services;
 
 
 
-===============Step 05:  (Connect the Services>MarketServices into Base Controller so that  I can use it into all controller)======================
+===============Step 05:  (Connect the Services>MarketServices Class creating Object into Base Controller so that  I can use it into all controller)======================
 
 use App\Services\MarketService;
 class Controller extends BaseController{

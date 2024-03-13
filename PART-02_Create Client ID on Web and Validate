@@ -1,18 +1,28 @@
-03. How to create Client ID and Generate access token with it from webpage?
-04. How to CHECK/validate generated access_token, INSERT into ARRAY and PUT it into SESSION
+03. How to create grant_type:client_credentials(Client ID) and Generate access token with it from webpage? (V_37)
+04. How to CHECK/validate generated access_token, INSERT into ARRAY and PUT it into SESSION (V_37)
             a) will expires in 5Min
             b) decorate token like Bearer TOKEN
             c) Include grand_type
-05. How to check Access_token is exists in Session and Not Expired?
+05. How to check wheather Access_token exists in Session and Not Expired? (V_37)
 
 
+06. How to create grant_type:authorization_code (Authorization System) in WEB? (V_41,42,43)
+07. How to create grant_type: password  in WEB? ()
 
-======================= 03. How to create Client ID and Generate access token with it from webpage? ====================
 
+09. How to get worked Refresh Token? 
+08. How to get access_token of a Logged in User?
+
+---------------------
+
+<?php
+namespace App\Services;
+use App\Traits\ConsumesExternalServices;
+use App\Traits\InteractsWithMarketResponses;
 
 class MarketAuthenticationService{
     use ConsumesExternalServices, InteractsWithMarketResponses;
-    
+
     protected $baseUri;
     protected $clientId;
     protected $clientSecret;
@@ -26,6 +36,9 @@ class MarketAuthenticationService{
         $this->passwordClientId = config('services.market.password_client_id');
         $this->passwordClientSecret = config('services.market.password_client_secret');
     }
+
+
+============= 03. How to create grant_type:client_credentials(Client ID) and Generate access token with it from webpage? (V_37) ===============
 
   public function getClientCredentialsToken(){
         if ($token = $this->existingValidToken())  {
@@ -44,7 +57,7 @@ class MarketAuthenticationService{
     }
 
 
-============== 04. How to CHECK/validate generated access_token, INSERT into ARRAY and PUT it into SESSION ==================
+============== 04. How to CHECK/validate generated access_token, INSERT into ARRAY and PUT it into SESSION (V_37) ==================
 
 public function storeValidToken($tokenData, $grantType){
         $tokenData->token_expires_at = now()->addSeconds($tokenData->expires_in - 5);
@@ -55,7 +68,7 @@ public function storeValidToken($tokenData, $grantType){
     }
 
 
-============================ 05. How to check Access_token is exists in Session and Not Expired?  ================================ 
+============================ 05. How to check wheather Access_token is exists in Session and Not Expired? (V_37) ================================ 
 public function existingValidToken() {
         if (session()->has('current_token')) {
             $tokenData = session()->get('current_token');
@@ -66,3 +79,93 @@ public function existingValidToken() {
         }
         return false;
     }
+========================= 06. How to create grant_type:authorization_code (Authorization System) in WEB? (V_41,42,43) ==============================
+
+public function resolveAuthorizationUrl(){
+        $query = http_build_query([
+            'client_id' => $this->clientId,
+            'redirect_uri' => route('authorization'),
+            'response_type' => 'code',
+            'scope' => 'purchase-product manage-products manage-account read-general',
+        ]);
+
+        return "{$this->baseUri}/oauth/authorize?{$query}";
+    }
+    public function getCodeToken($code) {
+        $formParams = [
+            'grant_type' => 'authorization_code',
+            'client_id' => $this->clientId,
+            'client_secret' => $this->clientSecret,
+            'redirect_uri' => route('authorization'),
+            'code' => $code,
+        ];
+
+        $tokenData = $this->makeRequest('POST', 'oauth/token', [], $formParams);
+        $this->storeValidToken($tokenData, 'authorization_code');
+        return $tokenData;
+    }
+
+======================== 07. How to create grant_type: password  in WEB?======================================
+
+ public function getPasswordToken($username, $password) {
+        $formParams = [
+            'grant_type' => 'password',
+            'client_id' => $this->passwordClientId,
+            'client_secret' => $this->passwordClientSecret,
+            'username' => $username,
+            'password' => $password,
+            'scope' => 'purchase-product manage-products manage-account read-general',
+        ];
+
+        $tokenData = $this->makeRequest('POST', 'oauth/token', [], $formParams);
+        $this->storeValidToken($tokenData, 'password');
+
+        return $tokenData;
+    }
+
+
+======================== 08. How get work Refresh Token ==================================
+
+public function refreshAuthenticatedUserToken($user){
+        $clientId = $this->clientId;
+        $clientSecret = $this->clientSecret;
+
+        if ($user->grant_type === 'password') {
+            $clientId = $this->passwordClientId;
+            $clientSecret = $this->passwordClientSecret;
+        }
+
+        $formParams = [
+            'grant_type' => 'refresh_token',
+            'client_id' => $clientId,
+            'client_secret' => $clientSecret,
+            'refresh_token' => $user->refresh_token,
+        ];
+
+        $tokenData = $this->makeRequest('POST', 'oauth/token', [], $formParams);
+        $this->storeValidToken($tokenData, $user->grant_type);
+        $user->fill([
+            'access_token' => $tokenData->access_token,
+            'refresh_token' => $tokenData->refresh_token,
+            'token_expires_at' => $tokenData->token_expires_at,
+        ]);
+
+        $user->save();
+        return $tokenData->access_token;
+    }
+
+
+
+======================== 09. How to get access_token of a Logged in User?  =================================
+
+public function getAuthenticatedUserToken(){
+        $user = auth()->user();
+        if (now()->lt($user->token_expires_at)) {
+            return $user->access_token;
+        }
+        return $this->refreshAuthenticatedUserToken($user);
+
+    }
+
+
+-

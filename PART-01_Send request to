@@ -59,7 +59,7 @@ class Controller extends BaseController{
     }
 }
 
-===============Step 06: Create a contoller and call  $marketService for CRUE Or other operation ========================
+===============Step 06: Create a contoller and call  $marketService for CRUD Or other operation ========================
 
 class WelcomeController extends Controller{    
     public function showWelcomePage()    {

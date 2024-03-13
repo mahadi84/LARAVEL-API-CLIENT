@@ -1,0 +1,20 @@
+
+
+PART:01:
+01. What Pacakge must need to send request to other API/website?
+02. Method, RequestUrl, formParameter, $hasFile are these important to send request?
+03. If requested result(Data/Error) returnn how to decode to php/show these?
+
+PART:02:
+03. How to create Client ID and Generate access token with it from webpage?
+04. How to CHECK/validate generated access_token, INSERT into ARRAY and PUT it into SESSION
+            a) will expires in 5Min
+            b) decorate token like Bearer TOKEN
+            c) Include grand_type
+05. How to check Access_token is exists in Session and Not Expired?
+
+
+
+
+
+-

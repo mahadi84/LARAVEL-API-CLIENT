@@ -9,7 +9,11 @@
 
 ======================= 03. How to create Client ID and Generate access token with it from webpage? ====================
 
-protected $baseUri;
+
+class MarketAuthenticationService{
+    use ConsumesExternalServices, InteractsWithMarketResponses;
+    
+    protected $baseUri;
     protected $clientId;
     protected $clientSecret;
     protected $passwordClientId;

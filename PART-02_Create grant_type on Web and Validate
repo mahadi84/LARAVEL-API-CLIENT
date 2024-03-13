@@ -58,27 +58,35 @@ class MarketAuthenticationService{
         return $tokenData->access_token;
     }
 
---Route and Blade-----
+--Route, Controller and Blade-----
 
-
->>>>>Create CLIENT  <<<<<<<<<<<
+>>>>> Create CLIENT  <<<<<<<<<<<
             Route::get('client', function (\Laravel\Passport\ClientRepository $clientRepository, Request $request) {
                return view('client-token', ['client_token' => $clientRepository->create(null, $request->name, $request->redirect)]); 
             })->name('dashboard.clients');
->>>>>Create FORM  <<<<<<<<<<<<<<<<<<<
+
+>>> Controller <<<<<<<<<<<<<<<<<<<
+
+            public function CreateClient(\Laravel\Passport\ClientRepository $clientRepository, Request $request) {
+               return view('client-token', ['client_token' => $clientRepository->create(null, $request->name, $request->redirect)]); 
+            }
+
+
+>>>>> Create FORM  <<<<<<<<<<<<<<<<<<<
             <form action="/oauth/clients" method="POST">
             @csrf
             <input name="name" type="name">
             <input name="redirect" type="text">
             </form>
->>>>>SHOW CLIENTS<<<<<<<<<<<<<<<<<<
+
+>>>>> SHOW CLIENTS<<<<<<<<<<<<<<<<<<
             @forelse ($clients as $client)
-            {{$client->id}}{{$client->name}}{{$client->redirect}}
-            {{$client->secret}}
+            {{$client->id}}{{$client->name}}
+            {{$client->redirect}}{{$client->secret}}
             @empty                       
             @endforelse
 
->>>>>SHOW CLIENT(ROUTE) **CREATED BY LOGGED IN USER  <<<<<<<<<<<<
+>>>>> SHOW CLIENTs(ROUTE) **CREATED BY LOGGED IN USER  <<<<<<<<<<<<
             Route::get('dashboard/clients', function(Request $request){
                 return view('clients', ['clients'=> $request->user()->clients]);
             })->name('dashboard.clients');

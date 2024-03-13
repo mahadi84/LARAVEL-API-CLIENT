@@ -74,7 +74,7 @@ class MarketAuthenticationService{
             })->name('dashboard.clients');
 
 
->>>>> SHOW CLIENTS<<<<<<<<<<<<<<<<<<
+>>>>> SHOW CLIENTS(BLADE)<<<<<<<<<<<<<<<<<<
             @forelse ($clients as $client)
             {{$client->id}}{{$client->name}}
             {{$client->redirect}}{{$client->secret}}

@@ -58,6 +58,31 @@ class MarketAuthenticationService{
         return $tokenData->access_token;
     }
 
+--Route and Blade-----
+
+
+>>>>>Create CLIENT  <<<<<<<<<<<
+            Route::get('client', function (\Laravel\Passport\ClientRepository $clientRepository, Request $request) {
+               return view('client-token', ['client_token' => $clientRepository->create(null, $request->name, $request->redirect)]); 
+            })->name('dashboard.clients');
+>>>>>Create FORM  <<<<<<<<<<<<<<<<<<<
+            <form action="/oauth/clients" method="POST">
+            @csrf
+            <input name="name" type="name">
+            <input name="redirect" type="text">
+            </form>
+>>>>>SHOW CLIENTS<<<<<<<<<<<<<<<<<<
+            @forelse ($clients as $client)
+            {{$client->id}}{{$client->name}}{{$client->redirect}}
+            {{$client->secret}}
+            @empty                       
+            @endforelse
+
+>>>>>SHOW CLIENT(ROUTE) **CREATED BY LOGGED IN USER  <<<<<<<<<<<<
+            Route::get('dashboard/clients', function(Request $request){
+                return view('clients', ['clients'=> $request->user()->clients]);
+            })->name('dashboard.clients');
+
 
 ============== 04. How to CHECK/validate generated access_token, INSERT into ARRAY and PUT it into SESSION (V_37) ============
 

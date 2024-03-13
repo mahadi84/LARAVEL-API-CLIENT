@@ -57,7 +57,7 @@ class MarketAuthenticationService{
     }
 
 
-============== 04. How to CHECK/validate generated access_token, INSERT into ARRAY and PUT it into SESSION (V_37) ==================
+============== 04. How to CHECK/validate generated access_token, INSERT into ARRAY and PUT it into SESSION (V_37) ============
 
 public function storeValidToken($tokenData, $grantType){
         $tokenData->token_expires_at = now()->addSeconds($tokenData->expires_in - 5);
@@ -68,7 +68,7 @@ public function storeValidToken($tokenData, $grantType){
     }
 
 
-============================ 05. How to check wheather Access_token is exists in Session and Not Expired? (V_37) ================================ 
+============== 05. How to check wheather Access_token is exists in Session and Not Expired? (V_37) ============================ 
 public function existingValidToken() {
         if (session()->has('current_token')) {
             $tokenData = session()->get('current_token');
@@ -79,7 +79,7 @@ public function existingValidToken() {
         }
         return false;
     }
-========================= 06. How to create grant_type:authorization_code (Authorization System) in WEB? (V_41,42,43) ==============================
+============= 06. How to create grant_type:authorization_code (Authorization System) in WEB? (V_41,42,43) ==========================
 
 public function resolveAuthorizationUrl(){
         $query = http_build_query([

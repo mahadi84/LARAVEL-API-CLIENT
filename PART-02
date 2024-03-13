@@ -1,0 +1,30 @@
+03. How to create Client ID and Generate access token with it from webpage?
+04. How to CHECK/validate generated access_token, INSERT into ARRAY and PUT it into SESSION
+            a) will expires in 5Min
+            b) decorate token like Bearer TOKEN
+            c) Include grand_type
+05. How to check Access_token is exists in Session and Not Expired?
+
+
+
+
+============== 04. How to CHECK/validate generated access_token, INSERT into ARRAY and PUT it into SESSION ==================
+public function storeValidToken($tokenData, $grantType){
+        $tokenData->token_expires_at = now()->addSeconds($tokenData->expires_in - 5);
+        $tokenData->access_token = "{$tokenData->token_type} {$tokenData->access_token}";
+        $tokenData->grant_type = $grantType;
+
+        session()->put(['current_token' => $tokenData]);
+    }
+
+    public function existingValidToken() {
+        if (session()->has('current_token')) {
+            $tokenData = session()->get('current_token');
+
+            if (now()->lt($tokenData->token_expires_at)) {
+                return $tokenData->access_token;
+            }
+        }
+
+        return false;
+    }

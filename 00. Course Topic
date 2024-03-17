@@ -1,7 +1,11 @@
-COURSE TYPE IN UDEMY: Use Laravel to Consume APIs and Services Over HTTP
+
+COURSE TITLE IN UDEMY: Use Laravel to Consume APIs and Services Over HTTP By JuanD
 
 
-Section: 01 (Details about the API or HTTP Service to be consumed from the HTTP Client)
+Section: 01 Introduction
+-------------------------
+
+Section: 02 (Details about the API or HTTP Service to be consumed from the HTTP Client)
 ----------------------------------------		
         01. About the API to consume
         02. How to Ask Questions
@@ -11,7 +15,7 @@ Section: 01 (Details about the API or HTTP Service to be consumed from the HTTP 
         06. The responses, actions, and restrictions of the API to consume
 
 
-Section: 02 (Creating and preparing a Laravel project for the HTTP Client)
+Section: 03 (Creating and preparing a Laravel project for the HTTP Client)
 ----------------------------------------
         01. About the development environment to use in the course
         02. Obtaining the Laravel structure for the HTTP Client
@@ -24,7 +28,7 @@ Section: 02 (Creating and preparing a Laravel project for the HTTP Client)
         09. Get sure you understand some important details
 
 
-Section: 03 (Building the initial graphical interface of the HTTP client)
+Section: 04 (Building the initial graphical interface of the HTTP client)
 ----------------------------------------
         01. Laravel 6: Before starting this section
         02. Generating the initial components of the HTTP client interface
@@ -33,14 +37,14 @@ Section: 03 (Building the initial graphical interface of the HTTP client)
         05. Adding the possibility to login directly with the API
 
 
-Section: 04 (Preparing the Laravel project to consume the target service)
+Section: 05 (Preparing the Laravel project to consume the target service)
 ----------------------------------------
         01. Creating a generic component to consume HTTP services from Laravel
         02. Creating the component that will know how to consume the target service
         03. Preparing the configuration of the service to consume
 
 
-Section: 05 (Implementing the necessary methods to consume the HTTP Service)
+Section: 06 (Implementing the necessary methods to consume the HTTP Service)
 ----------------------------------------
         01. Implementing the method to authorize requests
         02. Implementing the method to decode the HTTP API responses
@@ -48,7 +52,7 @@ Section: 05 (Implementing the necessary methods to consume the HTTP Service)
         04. Facilitating and generalizing the use of the Service created in the Client
 
 
-Section: 06 (Making the first requests to the HTTP service and showing the results)
+Section: 07 (Making the first requests to the HTTP service and showing the results)
 ----------------------------------------
         01. Getting the list of products from the API
         02. Obtaining the list of categories from the HTTP service
@@ -59,7 +63,7 @@ Section: 06 (Making the first requests to the HTTP service and showing the resul
         07. Showing the products of a category in the HTTP Client
 
 
-Section: 07 (Automating the obtaining of access tokens associated with the HTTP Client)
+Section: 08 (Automating the obtaining of access tokens associated with the HTTP Client)
 ----------------------------------------
         01. Adding a new service to obtain access tokens from the HTTP Client
         02. Automatically obtaining a token associated with the HTTP Client
@@ -67,7 +71,7 @@ Section: 07 (Automating the obtaining of access tokens associated with the HTTP 
         04. Avoiding getting a token for every request to the HTTP Service
 
 
-Section: 08 (Authenticating users directly from the API)
+Section: 09 (Authenticating users directly from the API)
 ----------------------------------------
         01. Generating the URL to enable the login button with the API
         02. Preparing the button to obtain the authorization of the users
@@ -77,14 +81,14 @@ Section: 08 (Authenticating users directly from the API)
         06. Creating sessions for users validated by the HTTP service
 
 
-Section: 09 (Authenticating users directly with email and password)
+Section: 10 (Authenticating users directly with email and password)
 ----------------------------------------
         01. Obtaining a valid token from the user credentials
         02. Authenticating a user in the HTTP Client through their credentials
         03. Properly handling attempts with invalid credentials
 
 
-Section: 10 (Improving the experience of users authenticated in the HTTP client)
+Section: 11 (Improving the experience of users authenticated in the HTTP client)
 ----------------------------------------
         01. Adding possible actions for authenticated users
         02. Adding links to protected actions for authenticated users
@@ -92,19 +96,20 @@ Section: 10 (Improving the experience of users authenticated in the HTTP client)
         04. Refreshing expired user tokens
 
 
-Section: 11 (Implementing protected actions for HTTP client users )
+Section: 12 (Implementing protected actions for HTTP client users )
 ----------------------------------------
-        01. Allowing products to be published by an authenticated user
-        02. Preparing the client to send files on requests
-        03. Publishing products with the information given to the HTTP client
-        04. Associating a product to the indicated category
-        05. Making a published product available
-        06. Allowing to purchase products from an authenticated user
-        07. Showing the purchases list to a user authenticated in the HTTP client
-        08. Showing the list of publications of an authenticated user
+        01. Showing the name of a user, obtained directly from the API
+	02. Allowing products to be published by an authenticated user
+        03. Preparing the client to send files on requests
+        04. Publishing products with the information given to the HTTP client
+        05. Associating a product to the indicated category
+        06. Making a published product available
+        07. Allowing to purchase products from an authenticated user
+        08. Showing the purchases list to a user authenticated in the HTTP client
+        09. Showing the list of publications of an authenticated user
 
 
-Section: 12 (Handling errors and exceptions in the HTTP Client)
+Section: 13 (Handling errors and exceptions in the HTTP Client)
 ----------------------------------------
         01. Preparing the HTTP client to handle failures in requests
         02. Handling authentication errors when consuming the API
@@ -112,7 +117,7 @@ Section: 12 (Handling errors and exceptions in the HTTP Client)
         04. Handling internal exceptions of the HTTP Client
 
 
-Conclusions
+14. Conclusions
 ----------------------------------------
         01. How to use and apply what you have learned in your own HTTP clients
         02. Bonus Lecture

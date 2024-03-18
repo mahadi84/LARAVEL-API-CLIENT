@@ -52,42 +52,5 @@ trait ConsumesExternalServices{
 
 }
 
-=============================================  trait AuthorizesMarketRequests ===============================
-<?php
-
-namespace App\Traits;
-use App\Services\MarketAuthenticationService;
-
-trait AuthorizesMarketRequests{
-       public function resolveAuthorization(&$queryParams, &$formParams, &$headers){
-        $accessToken = $this->resolveAccessToken();
-        $headers['Authorization'] = $accessToken;
-    }
-
-    public function resolveAccessToken(){
-        $authenticationService = resolve(MarketAuthenticationService::class);
-        if (auth()->user()) {
-            return $authenticationService->getAuthenticatedUserToken();
-        }
-        return $authenticationService->getClientCredentialsToken();
-    }
-}
-
-===================================== trait InteractsWithMarketResponses =============================
-<?php
-namespace App\Traits;
-trait InteractsWithMarketResponses{
-       public function decodeResponse($response){
-        $decodedResponse = json_decode($response);
-        return $decodedResponse->data ?? $decodedResponse;
-    }
-
-    public function checkIfErrorResponse($response){
-        if (isset($response->error)) {
-            throw new \Exception("Something failed: {$response->error}");
-        }
-    }
-}
-
 
 -

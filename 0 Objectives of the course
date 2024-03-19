@@ -1,7 +1,7 @@
 
 OBJECTIVES:
 -----------
-    --I want to sell my products but to uploading others resource/API server, of course I have capabilty to show, Upload/Add, Edit, Delete  my product,
+    --I want to sell my products but to uploading others resource/API server, of course I am capable to show, Upload/Add, Edit, and Delete  my product,
     --And able to see my sell-transaction
     ** That resource server has many sellers like me.
 
@@ -13,12 +13,19 @@ WHAT I HAVE DESIGNED:
 ----------------------
 -Make Request to the Resource/API Server using Guzzlehttp Package(ConsumesExternalServices.php trait)
     --what are the parameters needs
-    --What if there is an file/image to upload
+    --What if there is a file/image to upload
 
 -Authorize the Client(AuthorizesMarketRequests.php trait and MarketAuthenticationService.php class)
-    --How to authorize
-      ---A Client  ---A Authorization Client ---A Password Client ---Token Expires
+    --How to generate a token with below Clients
+             ---A Client  ---A Authorization Client ---A Password Client ---Refresh-Token
+    --decorate token like Bearer kjefkaljdfoserjal
+    --Check wheather Access_token is exist in Session and Not Expired
+    --AND Authorize them
+    --get access_token of a Logged in User
+     
 -Receive response (InteractsWithMarketResponses.php trait)
-   --If response is Data, decode it to PHP.
-   --If response is ERROR,  throw new \Exception.
+   --If the response is Data, decode it to PHP.
+   --If the  response is ERROR,  throw new \Exception.
 
+
+-

@@ -9,6 +9,7 @@ class Controller extends BaseController{
     }
 }
 
+
 =================PRODUCT CONTROLLER ================
 
 class ProductController extends Controller
@@ -74,5 +75,38 @@ class ProductController extends Controller
                     'id' => $productData->identifier,
                 ])
             ->with('succes', ['Product created successufully']);
+    }
+}
+
+
+============================= HomeController(My all published product(Seller), My all Purchase Product(Buyer)) ==================
+class HomeController extends Controller{
+   
+    public function __construct(MarketService $marketService){
+        $this->middleware('auth');
+        parent::__construct($marketService);
+    }
+
+    // Show the application dashboard.
+    public function index(){
+        return view('home');
+    }
+
+    // Obtain and show the list of purchases
+    public function showPurchases(Request $request){
+        $purchases = $this->marketService->getPurchases($request->user()->service_id);
+        return view('purchases')
+            ->with([
+                'purchases' => $purchases,
+            ]);
+    }
+
+    // Obtain and show the list of published products
+    public function showProducts(Request $request){
+        $publications = $this->marketService->getPublications($request->user()->service_id);
+        return view('publications')
+            ->with([
+                'publications' => $publications,
+            ]);
     }
 }

@@ -1,0 +1,113 @@
+<?php
+
+namespace App\Http\Controllers\Auth;
+
+use App\Services\MarketAuthenticationService;
+use App\Services\MarketService;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
+
+
+class AuthenticatedSessionController extends Controller{
+
+    protected $marketAuthenticationService;
+
+    public function __construct(MarketAuthenticationService $marketAuthenticationService, MarketService $marketService)
+    {
+        $this->marketAuthenticationService=$marketAuthenticationService;
+        parent::__construct($marketService);
+    }
+
+
+    /**
+     * Display the login view.
+     */
+    public function create(): View
+    {
+        $authorizeUrl = $this->marketAuthenticationService->resolveAuthorizationUrl();
+        
+        return view('auth.login')
+                    ->with('authorizeUrl', $authorizeUrl);
+    }
+
+
+/**
+     * get the Code from browser returned form Resource Server API.
+     */
+    public function Authorization(Request $request){
+        if ($request->has('code')) {
+            $tokenData=  $this->marketAuthenticationService->getCodeToken($request->code);
+            $userData= $this->marketService->getUserInformation();
+            // dd($tokenData);
+            // dd($userData);
+            $user= $this->registerOrUpdateUser($userData, $tokenData);
+            $this->loginUser($user);
+            return redirect()->intended(RouteServiceProvider::HOME);
+        }
+
+        return redirect()
+            ->route('login')
+            ->withErrors(['You cancelled the authorization process']);
+        
+    }
+
+public function registerOrUpdateUser($userData, $tokenData){
+    return User::updateOrCreate(
+        [
+            'service_id'=> $userData->identifier,
+        ],
+        [
+            'grant_type'=>$tokenData->grant_type,
+            'access_token'=>$tokenData->access_token,
+            'refresh_token'=>$tokenData->refresh_token,
+            'token_expires_at'=>$tokenData->token_expires_at,
+        ]
+
+    );
+}
+
+
+    
+public function loginUser(User $user, $remember=true){
+    Auth::login($user, $remember);
+    session()->regenerate();
+}
+
+
+
+    /**
+     * Handle an incoming authentication request.
+     */
+    public function store(LoginRequest $request): RedirectResponse   {
+       
+            $tokenData = $this->marketAuthenticationService->getPasswordToken($request->email, $request->password);
+            $userData = $this->marketService->getUserInformation();
+            $user = $this->registerOrUpdateUser($userData, $tokenData);
+            $this->loginUser($user, $request->has('remember'));
+            return redirect()->intended(RouteServiceProvider::HOME);
+       
+
+
+        // $request->authenticate();
+        // $request->session()->regenerate();
+        // return redirect()->intended(RouteServiceProvider::HOME);
+    }
+
+    /**
+     * Destroy an authenticated session.
+     */
+    public function destroy(Request $request): RedirectResponse
+    {
+        Auth::guard('web')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/');
+    }
+}

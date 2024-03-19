@@ -1,15 +1,4 @@
 
-=================BASE CONTROLLER=================
-
-class Controller extends BaseController{
-
-    protected $marketService;
-    public function __construct(MarketService $marketService)    {
-        $this->marketService = $marketService;
-    }
-}
-
-
 =================PRODUCT CONTROLLER ================
 
 class ProductController extends Controller

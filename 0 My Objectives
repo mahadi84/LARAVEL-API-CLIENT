@@ -1,7 +1,7 @@
 
 OBJECTIVES:
 -----------
-    --I want to sell my products but to uploading others resource/API server, of course I am capable to show, Upload/Add, Edit, and Delete  my product,
+    --I want to sell my products, uploading to others resource/API server, of course I am capable to show, Upload/Add, Edit, and Delete  my products.
     --And able to see my sell-transaction
     ** That resource server has many sellers like me.
 
@@ -17,9 +17,9 @@ WHAT I HAVE DESIGNED:
 
 -Authorize the Client(AuthorizesMarketRequests.php trait and MarketAuthenticationService.php class)
     --How to generate a token with below Clients
-             ---A Client  ---A Authorization Client ---A Password Client ---Refresh-Token
-    --decorate token like Bearer kjefkaljdfoserjal
-    --Check wheather Access_token is exist in Session and Not Expired
+             ---Client  ---Authorization Client ---Password Client ---Refresh-Token
+    --decorate the token like Bearer kjefkaljdfoserjal..
+    --Check, if Access_token exists in Session and Not Expired
     --AND Authorize them
     --get access_token of a Logged in User
      

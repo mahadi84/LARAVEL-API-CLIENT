@@ -3,6 +3,7 @@ OBJECTIVES:
 -----------
     --I want to sell my products but to uploading others resource/API server, of course I have capabilty to show, Upload/Add, Edit, Delete  my product,
     --And able to see my sell-transaction
+    ** That resource server has many sellers like me.
 
 RESOURCE SERVER'S OWNER MUST PROVIDE ME:
 ---------------------------------------

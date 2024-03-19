@@ -1,0 +1,23 @@
+
+OJBECTIVES:
+-----------
+    --I want to sell my products but to uploading others resource/API server, of course I have capabilty to show, Upload/Add, Edit, Delete  my product,
+    --And able to see my sell-transaction
+
+RESOURCE SERVER'S OWNER MUST PROVIDE ME:
+---------------------------------------
+   --Query for CRUD for PRODUCT (MarketService.php)
+
+WHAT I HAVE DESIGNED:
+----------------------
+-Make Request to the Resource/API Server using Guzzlehttp Package(ConsumesExternalServices.php trait)
+    --what are the parameters needs
+    --What if there is an file/image to upload
+
+-Authorize the Client(AuthorizesMarketRequests.php trait and MarketAuthenticationService.php class)
+    --How to authorize
+      ---A Client  ---A Authorization Client ---A Password Client ---Token Expires
+-Receive response (InteractsWithMarketResponses.php trait)
+   --If response is Data, decode it to PHP.
+   --If response is ERROR,  throw new \Exception.
+

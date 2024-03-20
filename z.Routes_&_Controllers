@@ -1,4 +1,4 @@
-
+=================== Routes ============================
 //For Button (Authorize with API) in Login page/blade
 Route::get('authorization', [AuthenticatedSessionController::class, 'Authorization'])->name('authorization');
 
@@ -45,7 +45,7 @@ class HomeController extends Controller{
     }
 }
 
-======================================== PRODUCT CONTROLLER ================================
+==================PRODUCT CONTROLLER =========================
 
     public function showProduct($title, $id){
         $product = $this->marketService->getProduct($id);

@@ -1,0 +1,105 @@
+
+//For Button (Authorize with API) in Login page/blade
+Route::get('authorization', [AuthenticatedSessionController::class, 'Authorization'])->name('authorization');
+
+Route::get('categories/{title}-{id}/products', [CategoryProductController::class, 'showProducts'])->name('categories.products.show');
+
+Route::get('products/{title}-{id}', [ProductController::class, 'showProduct'])->name('products.show');
+Route::get('products/{title}-{id}/purchase', [ProductController::class, 'purchaseProduct'])->name('products.purchase');
+Route::get('products/publish', [ProductController::class, 'showPublishProductForm'])->name('products.publish');
+Route::post('products/publish', [ProductController::class, 'publishProduct']);
+
+Auth::routes(['register' => false, 'reset' => false]);
+
+Route::get('/home/purchases', [HomeController::class, 'showPurchases'])->name('purchases');
+Route::get('/home/products', [HomeController::class, 'showProducts'])->name('products');
+
+============================= HomeController(My all published product(Seller), My all Purchase Product(Buyer)) ==================
+class HomeController extends Controller{   
+    public function __construct(MarketService $marketService){
+        $this->middleware('auth');
+        parent::__construct($marketService);
+    }
+
+    // Show the application dashboard.
+    public function index(){
+        return view('home');
+    }
+
+    // Obtain and show the list of purchases
+    public function showPurchases(Request $request){
+        $purchases = $this->marketService->getPurchases($request->user()->service_id);
+        return view('purchases')
+            ->with([
+                'purchases' => $purchases,
+            ]);
+    }
+
+    // Obtain and show the list of published products
+    public function showProducts(Request $request){
+        $publications = $this->marketService->getPublications($request->user()->service_id);
+        return view('publications')
+            ->with([
+                'publications' => $publications,
+            ]);
+    }
+}
+
+======================================== PRODUCT CONTROLLER ================================
+
+    public function showProduct($title, $id){
+        $product = $this->marketService->getProduct($id);
+        return view('products.show')
+            ->with(['product' => $product,]);
+    }
+
+   
+     // Enable to purchase a products form the API
+    public function purchaseProduct(Request $request, $title, $id) {
+        $this->marketService->purchaseProduct($id, $request->user()->service_id, 1);
+        return redirect()
+            ->route('products.show',
+                [
+                    'title' => $title,
+                    'id' => $id,
+                ])
+            ->with('succes', ['Product purchased']);
+    }
+
+// Show the form to create a product on the API   
+    public function showPublishProductForm()    {
+        $categories = $this->marketService->getCategories();
+        return view('products.publish')
+            ->with([
+                'categories' => $categories,
+            ]);
+    }
+
+    // Create the product on the API    
+    public function publishProduct(Request $request){
+        $rules = [
+            'title' => 'required',
+            'details' => 'required',
+            'stock' => 'required|min:1',
+            'picture' => 'required|image',
+            'category' => 'required',
+        ];
+
+        $productData = $this->validate($request, $rules);
+        $productData['picture'] = fopen($request->picture->path(), 'r');
+        $productData = $this->marketService->publishProduct($request->user()->service_id, $productData);
+        $this->marketService->setProductCategory($productData->identifier, $request->category);
+        $this->marketService->updateProduct($request->user()->service_id, $productData->identifier, ['situation' => 'available']);
+
+        return redirect()
+            ->route('products.show',
+                [
+                    'title' => $productData->title,
+                    'id' => $productData->identifier,
+                ])
+            ->with('succes', ['Product created successufully']);
+    }
+}
+
+
+

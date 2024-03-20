@@ -1,0 +1,37 @@
+
+Schema::create('users', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('service_id');
+            $table->string('grant_type');
+            $table->text('access_token');
+            $table->text('refresh_token');
+            $table->timestamp('token_expires_at');
+            $table->rememberToken();
+            $table->timestamps();
+        });
+
+----------------------------MODEL------------------------------
+protected $fillable = [
+        'service_id',
+        'grant_type',
+        'access_token',
+        'refresh_token',
+        'token_expires_at',
+    ];
+
+    // The attributes that should be hidden for arrays.
+    protected $hidden = [
+        'remember_token',
+        'access_token',
+        'refresh_token',
+        'token_expires_at',
+    ];
+
+
+//Will show Loggedin username in blade, getting from API
+    
+public function getNameAttribute(){
+        $marketService = resolve(MarketService::class);
+        $userInformation = $marketService->getUserInformation();
+        return $userInformation->name;
+    }

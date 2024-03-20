@@ -1,21 +1,9 @@
 
-=================PRODUCT CONTROLLER ================
-
-class ProductController extends Controller
-{
-    // Create a new controller instance.
-    public function __construct(MarketService $marketService){
-        $this->middleware('auth')->except(['showProduct']);
-        parent::__construct($marketService);
-    }
-
 
     public function showProduct($title, $id){
         $product = $this->marketService->getProduct($id);
         return view('products.show')
-            ->with([
-                'product' => $product,
-            ]);
+            ->with(['product' => $product,]);
     }
 
    
@@ -31,8 +19,7 @@ class ProductController extends Controller
             ->with('succes', ['Product purchased']);
     }
 
-// Show the form to create a product on the API
-   
+// Show the form to create a product on the API   
     public function showPublishProductForm()    {
         $categories = $this->marketService->getCategories();
         return view('products.publish')

@@ -1,3 +1,6 @@
+PACKEGE: Http-Client(Guzzlehttp)
+---------------------------------
+composer require Guzzlehttp/guzzle
 
 ===============Step 01 (Add into .env file:)====================
 

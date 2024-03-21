@@ -7,7 +7,8 @@ OBJECTIVES:
 
 RESOURCE SERVER'S OWNER MUST PROVIDE ME:
 ---------------------------------------
-   --Query for CRUD for PRODUCT (MarketService.php)
+   --Client ID  --Client Secret --Password Client --Password Client Secret
+   --Query for CRUD for PRODUCT (Example: MarketService.php)
 
 WHAT I HAVE DESIGNED:
 ----------------------

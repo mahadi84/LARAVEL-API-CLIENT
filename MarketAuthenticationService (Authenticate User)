@@ -40,7 +40,7 @@ class MarketAuthenticationService{
     }
 
 
-============= 03. How to create grant_type:client_credentials(Client ID) and Generate access token with it from webpage? (V_37) ===============
+//============= 03. How to create grant_type:client_credentials(Client ID) and Generate access token with it from webpage? (V_37) ===============
 
   public function getClientCredentialsToken(){
         if ($token = $this->existingValidToken())  {
@@ -59,7 +59,7 @@ class MarketAuthenticationService{
     }
 
 
-============== 04. How to CHECK/validate generated access_token, INSERT into ARRAY and PUT it into SESSION (V_37) ============
+//============== 04. How to CHECK/validate generated access_token, INSERT into ARRAY and PUT it into SESSION (V_37) ============
 
 public function storeValidToken($tokenData, $grantType){
         $tokenData->token_expires_at = now()->addSeconds($tokenData->expires_in - 5);
@@ -70,7 +70,7 @@ public function storeValidToken($tokenData, $grantType){
     }
 
 
-============== 05. How to check wheather Access_token is exists in Session and Not Expired? (V_37) ============================ 
+//============== 05. How to check wheather Access_token is exists in Session and Not Expired? (V_37) ============================ 
 public function existingValidToken() {
         if (session()->has('current_token')) {
             $tokenData = session()->get('current_token');
@@ -81,7 +81,7 @@ public function existingValidToken() {
         }
         return false;
     }
-============= 06. How to create grant_type:authorization_code (Authorization System) in WEB? (V_41,42,43) ==========================
+//============= 06. How to create grant_type:authorization_code (Authorization System) in WEB? (V_41,42,43) ==========================
 
 public function resolveAuthorizationUrl(){
         $query = http_build_query([
@@ -93,7 +93,8 @@ public function resolveAuthorizationUrl(){
 
         return "{$this->baseUri}/oauth/authorize?{$query}";
     }
-    public function getCodeToken($code) {
+// ============Get Code from Browser
+public function getCodeToken($code) {
         $formParams = [
             'grant_type' => 'authorization_code',
             'client_id' => $this->clientId,
@@ -107,7 +108,7 @@ public function resolveAuthorizationUrl(){
         return $tokenData;
     }
 
-======================== 07. How to create grant_type: password  in WEB?======================================
+//======================== 07. How to create grant_type: password  in WEB?======================================
 
  public function getPasswordToken($username, $password) {
         $formParams = [
@@ -126,7 +127,7 @@ public function resolveAuthorizationUrl(){
     }
 
 
-======================== 08. How get work Refresh Token ==================================
+//======================== 08. How get work Refresh Token ==================================
 
 public function refreshAuthenticatedUserToken($user){
         $clientId = $this->clientId;
@@ -158,7 +159,7 @@ public function refreshAuthenticatedUserToken($user){
 
 
 
-======================== 09. How to get access_token of a Logged in User?  =================================
+//======================== 09. How to get access_token of a Logged in User?  =================================
 
 public function getAuthenticatedUserToken(){
         $user = auth()->user();

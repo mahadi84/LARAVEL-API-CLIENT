@@ -64,7 +64,9 @@ class Controller extends BaseController{
 
 ===============Step 06: Create a contoller and call  $marketService for CRUD Or other operation ========================
 
-class WelcomeController extends Controller{    
+class WelcomeController extends Controller{   
+
+//Show product from Resource server
     public function showWelcomePage()    {
         $products = $this->marketService->getProducts();
         $categories = $this->marketService->getCategories();

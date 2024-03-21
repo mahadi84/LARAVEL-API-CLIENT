@@ -28,8 +28,7 @@ protected $fillable = [
     ];
 
 
-//Will show Loggedin username in blade, getting from API
-    
+//Will show Loggedin username in blade, getting from API   
 public function getNameAttribute(){
         $marketService = resolve(MarketService::class);
         $userInformation = $marketService->getUserInformation();

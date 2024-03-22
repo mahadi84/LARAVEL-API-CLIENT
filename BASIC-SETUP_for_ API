@@ -3,7 +3,7 @@ PACKEGE: I need.
 -Breeze Authentication
 -HTTP Client: Guzzlehttp/guzzle (By default comes with Laravel)
 
-===============Step 01 (Add into .env file:)====================
+===============Step 01 (Add into .env and .env.example file:)====================
 
 MARKET_BASE_URI=https://laravelapi.juandmegon.com
 MARKET_CLIENT_ID=

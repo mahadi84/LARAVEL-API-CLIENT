@@ -75,7 +75,8 @@ public function loginUser(User $user, $remember=true){
 }
 
 
-// EDIT the Original store like below  Handle an incoming authentication request.
+//Handle grant_type: password, client login 
+//EDIT the Original store like below  Handle an incoming authentication request.
     public function store(LoginRequest $request): RedirectResponse   {
        
             $tokenData = $this->marketAuthenticationService->getPasswordToken($request->email, $request->password);
